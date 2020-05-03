@@ -48,10 +48,9 @@ function App() {
             fontWeight: 400,
         },
         [theme.breakpoints.up('md')]: {
-            fontSize: '2.4rem',
+            fontSize: '6rem',
         },
     }
-
     theme.typography.h2 = {
         fontSize: '4rem',
         fontWeight: 400,
@@ -60,7 +59,7 @@ function App() {
             fontWeight: 400,
         },
         [theme.breakpoints.up('md')]: {
-            fontSize: '2.4rem',
+            fontSize: '4rem',
         },
     }
     return (
