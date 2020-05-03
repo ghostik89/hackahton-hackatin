@@ -26,15 +26,17 @@ export const HomePage = ({history}) => {
     return(
         <div>
             <Paper className={classes.paper}>
-                <Grid container spacing={3}>
-                    <Grid item xs={3}>
-                        <FunctionsIcon/>
+                <Container>
+                    <Grid container spacing={3}>
+                        <Grid item xs={3}>
+                            <FunctionsIcon/>
+                        </Grid>
+                        <Grid item xs={9}>
+                            <Typography>Арифметика</Typography>
+                        </Grid>
                     </Grid>
-                    <Grid item xs={9}>
-                        <Typography>Арифметика</Typography>
-                    </Grid>
-                </Grid>
-                <Typography>Выбери свой уровень</Typography>
+                    <Typography>Выбери свой уровень</Typography>
+                </Container>
             </Paper>
             <Container>
                 <Paper>
