@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -9,6 +9,10 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
+import MenuItem from "@material-ui/core/MenuItem";
+import InputLabel from "@material-ui/core/InputLabel";
+import Select from "@material-ui/core/Select";
+import FormControl from "@material-ui/core/FormControl";
 
 const useStyles = makeStyles((theme) => ({
     paper: {
@@ -35,6 +39,7 @@ const useStyles = makeStyles((theme) => ({
 
 export const RegisterPage = ({history}) => {
     const classes = useStyles();
+    const [role, setRole] = useState(10)
 
     const toLoginPage = e => {
         e.preventDefault()
@@ -76,14 +81,33 @@ export const RegisterPage = ({history}) => {
                             />
                         </Grid>
                         <Grid item xs={12}>
+                            <FormControl variant="outlined" style={{width: '100%'}}>
+                                <InputLabel id="demo-simple-select-outlined-label">Age</InputLabel>
+                                <Select
+                                    labelId="demo-simple-select-outlined-label"
+                                    id="demo-simple-select-outlined"
+                                    value={role}
+                                    onChange={e => setRole(e.target.value)}
+                                    label="Age"
+                                >
+                                    <MenuItem value="">
+                                        <em>None</em>
+                                    </MenuItem>
+                                    <MenuItem value={10}>Ten</MenuItem>
+                                    <MenuItem value={20}>Twenty</MenuItem>
+                                    <MenuItem value={30}>Thirty</MenuItem>
+                                </Select>
+                            </FormControl>
+                        </Grid>
+                        <Grid item xs={12}>
                             <TextField
                                 variant="outlined"
                                 required
                                 fullWidth
                                 id="email"
                                 label="Имя пользователя"
-                                name="email"
-                                autoComplete="email"
+                                name="login"
+                                autoComplete="login"
                             />
                         </Grid>
                         <Grid item xs={12}>
