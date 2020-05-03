@@ -47,31 +47,30 @@ export const LoginPage = ({history}) => {
     const { setAuthTokens } = useAuth()
     const classes = useStyles();
 
-    const authRequest = () => {
-        return fetch(`${BASE_URL}api/users/login`, {
-            headers: new Headers({
-                "Authorization": `Basic ${Base64.encode(`${login}:${password}`)}`
-            })
-        }).then(response => (response.ok ? response.json() : Promise.reject(response)))
-    }
-
     useEffect( () => {
         const token = localStorage.getItem('token')
         if (token !== null){
-            authRequest().then(res => {
-                const token = `${Base64.encode(`${login}:${password}`)}`
+            fetch(`${BASE_URL}api/users/login`, {
+                headers: new Headers({
+                    "Authorization": `Basic ${token}`
+                })
+            }).then(response => (response.ok ? response.json() : Promise.reject(response))).then(res => {
                 setAuthTokens({ user: res, token: token })
                 history.push({ pathname: '/home' })
             }).catch(() => localStorage.clear())
         }
-
     },[])
 
     const authClick = e => {
         e.preventDefault()
-        authRequest().then(res => {
+        fetch(`${BASE_URL}api/users/login`, {
+            headers: new Headers({
+                "Authorization": `Basic ${Base64.encode(`${login}:${password}`)}`
+            })
+        }).then(response => (response.ok ? response.json() : Promise.reject(response))).then(res => {
             const token = `${Base64.encode(`${login}:${password}`)}`
             setAuthTokens({ user: res, token: token })
+            localStorage.setItem('token', token)
             history.push({ pathname: '/home' })
         }).catch(() => setShowErr(true))
     }
