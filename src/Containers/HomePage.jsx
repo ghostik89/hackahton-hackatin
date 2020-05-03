@@ -5,7 +5,11 @@ import Paper from "@material-ui/core/Paper";
 import {makeStyles} from "@material-ui/core/styles";
 import FunctionsIcon from '@material-ui/icons/Functions';
 import Grid from "@material-ui/core/Grid";
-import {ListOfLevels} from "../Components/HomePage/ListOfLevels";
+import ListSubheader from "@material-ui/core/ListSubheader";
+import List from "@material-ui/core/List";
+import {LevelItem} from "../Components/HomePage/LevelItem";
+import {useAuth} from "../Context/auth";
+import {BASE_URL} from "../constants/RequestConstants";
 
 const useStyles = makeStyles((theme) => ({
     paper: {
@@ -19,19 +23,28 @@ const useStyles = makeStyles((theme) => ({
     },
     page:{
         paddingTop:'2rem'
+    },
+    list:{
+            width: '100%',
+            minWidth: 360,
+            backgroundColor: theme.palette.background.paper,
     }
 }));
 
 export const HomePage = ({history}) => {
     const [levels, setLevels] = useState([])
+    const {authTokens} = useAuth()
 
     useEffect(() => {
-        setLevels([{
-            levelName:"SomeName",
-            description:"description",
-            steps:[{
-            }]
-        },{},{}])
+        fetch(`${BASE_URL}api/theme/all`,{
+            method:'GET',
+            headers: new Headers({
+                "Authorization": `Basic ${authTokens.token}`,
+                "Content-type": "application/json;charset=utf-8"
+            })
+        }).then(response => (response.ok ? response.json(): Promise.reject(response))).then(res => {
+            setLevels(res)
+        }).catch(error => console.log(error))
     },[])
 
     const classes = useStyles()
@@ -49,7 +62,18 @@ export const HomePage = ({history}) => {
             </Paper>
             <Container>
                 <Paper>
-                    <ListOfLevels />
+                    <List
+                        component="nav"
+                        aria-labelledby="nested-list-subheader"
+                        subheader={
+                            <ListSubheader component="div" id="nested-list-subheader">
+                                Nested List Items
+                            </ListSubheader>
+                        }
+                        className={classes.list}
+                    >
+                        {levels.map(elem => <LevelItem key={elem["id"]} unit={elem}/>)}
+                    </List>
                 </Paper>
             </Container>
         </div>
