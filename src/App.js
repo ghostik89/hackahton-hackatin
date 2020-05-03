@@ -1,26 +1,31 @@
-import React from 'react';
-import logo from './logo.svg';
+import React,{useState} from 'react';
+import { Router, Route, Switch } from 'react-router-dom'
 import './App.css';
+import {LoginPage} from "./Containers/LoginPage";
+import history from './history'
+import {AuthContext} from './Context/auth'
+import {PrivateRouter} from "./Components/PrivateRoueter";
+import {HomePage} from "./Containers/HomePage";
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    const [authTokens, setAuthTokens] = useState({user:{}, token:""});
+    const setTokens = (data) => {
+        setAuthTokens(data);
+    }
+    const logOut = () => {
+        setAuthTokens({user:{}, token:""});
+        localStorage.clear();
+    }
+    return (
+        <AuthContext.Provider value={{ authTokens, setAuthTokens: setTokens }}>
+            <Router history = {history}>
+                <Switch>
+                    <Route exact path={"/"} component={props => <LoginPage   {...props}/>}/>
+                    <PrivateRouter exact path={"/home"} component={HomePage}/>
+                </Switch>
+            </Router>
+        </AuthContext.Provider>
+    );
 }
 
 export default App;
