@@ -6,6 +6,9 @@ import Collapse from "@material-ui/core/Collapse";
 import List from "@material-ui/core/List";
 import React from "react";
 import {makeStyles} from "@material-ui/core/styles";
+import ListItemIcon from "@material-ui/core/ListItemIcon";
+import AutorenewIcon from '@material-ui/icons/Autorenew';
+import IconButton from "@material-ui/core/IconButton";
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -34,8 +37,18 @@ export const LevelItem = props => {
             <Collapse in={open} timeout="auto" unmountOnExit>
                 <List component="div" disablePadding>
                     {props.unit["levels"].map(elem => (
-                        <ListItem key={elem["id"]} button className={classes.nested}>
+                        <ListItem key={elem["id"]}  className={classes.nested}>
                             <ListItemText primary={elem["name"]} />
+                            <ListItemIcon align={"right"}>
+                                <IconButton
+                                    color="primary"
+                                    aria-label="upload picture"
+                                    component="span"
+                                    onClick={() => props.goToLevelPage(elem["id"], elem["name"])}
+                                >
+                                    <AutorenewIcon/>
+                                </IconButton>
+                            </ListItemIcon>
                         </ListItem>))}
                 </List>
             </Collapse>

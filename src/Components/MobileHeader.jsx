@@ -20,17 +20,13 @@ const useStyles = makeStyles({
 
 });
 
-export const Header = () => {
+export const Header = props => {
     const classes = useStyles();
-    const [value, setValue] = React.useState(0);
-
+    //todo: add redirect to other pages
     return (
         <Paper>
             <BottomNavigation
-                value={value}
-                onChange={(event, newValue) => {
-                    setValue(newValue);
-                }}
+                value={props.value}
                 showLabels
                 className={classes.root}
             >

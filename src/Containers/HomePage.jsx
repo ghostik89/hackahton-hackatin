@@ -9,6 +9,7 @@ import List from "@material-ui/core/List";
 import {LevelItem} from "../Components/HomePage/LevelItem";
 import {useAuth} from "../Context/auth";
 import {BASE_URL} from "../constants/RequestConstants";
+import {Header} from "../Components/MobileHeader";
 
 const useStyles = makeStyles((theme) => ({
     paper: {
@@ -47,16 +48,20 @@ export const HomePage = ({history}) => {
         }).catch(error => console.log(error))
     },[])
 
+    const goToLevelPage = (levelId, name) => {
+        history.push({ pathname: `/level/${levelId}/${name}` })
+    }
+
     return(
         <div>
-            <Paper className={classes.paper}>
+            <Paper className={classes.paper} elevation={3}>
                 <Container className={classes.page}>
                     <Grid container spacing={3}>
                         {/*fixme: not for mobile*/}
                         <FunctionsIcon  style={window.innerWidth <= 760? { fontSize: 65 }: { fontSize: 120 }} />
                         <Typography variant="h1" component="h2" gutterBottom>Арифметика</Typography>
                     </Grid>
-                    <Typography  variant="h2" component="h2" gutterBottom>Выбери свой уровень</Typography>
+                    <Typography  variant="h2" component="h2" gutterBottom>Выбери уровень</Typography>
                 </Container>
             </Paper>
             <Container>
@@ -66,10 +71,11 @@ export const HomePage = ({history}) => {
                         aria-labelledby="nested-list-subheader"
                         className={classes.list}
                     >
-                        {levels.map(elem => <LevelItem key={elem["id"]} unit={elem}/>)}
+                        {levels.map(elem => <LevelItem key={elem["id"]} unit={elem} goToLevelPage={goToLevelPage}/>)}
                     </List>
                 </Paper>
             </Container>
+            <Header value={0}/>
         </div>
     )
 }

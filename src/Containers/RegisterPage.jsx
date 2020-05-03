@@ -5,7 +5,7 @@ import TextField from '@material-ui/core/TextField';
 import Link from '@material-ui/core/Link';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
-import { makeStyles } from '@material-ui/core/styles';
+import {makeStyles} from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import MenuItem from "@material-ui/core/MenuItem";
 import InputLabel from "@material-ui/core/InputLabel";
@@ -14,6 +14,8 @@ import FormControl from "@material-ui/core/FormControl";
 import mySvg from "../logo.svg";
 import {BASE_URL} from "../constants/RequestConstants";
 import {SnackBar} from "../Components/SnackBar";
+import Box from "@material-ui/core/Box";
+import {Copyright} from "../Components/CopyRight";
 
 const useStyles = makeStyles((theme) => ({
     paper: {
@@ -162,6 +164,9 @@ export const RegisterPage = ({history}) => {
                     </Grid>
                 </form>
             </div>
+            <Box mt={8}>
+                <Copyright />
+            </Box>
             <SnackBar
                 open={showErr}
                 funcClose={() => setShowErr(false)}

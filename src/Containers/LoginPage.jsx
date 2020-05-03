@@ -6,7 +6,7 @@ import Checkbox from '@material-ui/core/Checkbox';
 import Link from '@material-ui/core/Link';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
-import { makeStyles } from '@material-ui/core/styles';
+import {makeStyles} from '@material-ui/core/styles';
 import mySvg from '../logo.svg'
 import Container from '@material-ui/core/Container';
 import { useAuth } from '../Context/auth'
@@ -14,6 +14,8 @@ import { BASE_URL} from '../constants/RequestConstants'
 import { Base64 } from 'js-base64'
 import {SnackBar} from "../Components/SnackBar";
 import LinearProgress from "@material-ui/core/LinearProgress";
+import Box from "@material-ui/core/Box";
+import {Copyright} from "../Components/CopyRight";
 
 const useStyles = makeStyles((theme) => ({
     paper: {
@@ -141,6 +143,9 @@ export const LoginPage = ({history}) => {
                             </Grid>
                         </form>
                     </div>
+                    <Box mt={8}>
+                        <Copyright />
+                    </Box>
                     <SnackBar
                         open={showErr}
                         funcClose={() => setShowErr(false)}

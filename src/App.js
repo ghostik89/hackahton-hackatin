@@ -10,10 +10,8 @@ import {NotFoundPage} from "./Containers/NotFoundPage";
 import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles'
 import { deepPurple, pink} from '@material-ui/core/colors'
 import { ruRU } from '@material-ui/core/locale';
-import {Copyright} from "./Components/CopyRight";
-import Box from "@material-ui/core/Box";
-import {Header} from "./Components/MobileHeader";
 import {RegisterPage} from "./Containers/RegisterPage";
+import {LevelPage} from "./Containers/LevelPage";
 
 
 const theme = createMuiTheme({
@@ -34,10 +32,6 @@ function App() {
     const [authTokens, setAuthTokens] = useState({user:{}, token:""});
     const setTokens = (data) => {
         setAuthTokens(data);
-    }
-    const logOut = () => {
-        setAuthTokens({user:{}, token:""});
-        localStorage.clear();
     }
 
     theme.typography.h1 = {
@@ -70,12 +64,9 @@ function App() {
                         <Route exact path={"/"} component={props => <LoginPage  {...props}/>}/>
                         <Route exact path={"/register"} component={props => <RegisterPage  {...props}/>}/>
                         <PrivateRouter exact path={"/home"} component={HomePage}/>
+                        <PrivateRouter exact path={"/level/:levelId/:name"} component={LevelPage}/>
                         <Route path="*" component={props => <NotFoundPage{...props}/>}/>
                     </Switch>
-                    <Box mt={8}>
-                        <Copyright />
-                    </Box>
-                    {authTokens.token !== ''? <Header logout={logOut}/>:''}
                 </ThemeProvider>
             </Router>
         </AuthContext.Provider>
