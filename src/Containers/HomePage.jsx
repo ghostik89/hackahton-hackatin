@@ -1,5 +1,5 @@
 import Typography from '@material-ui/core/Typography';
-import React from "react";
+import React, {useEffect, useState} from "react";
 import Container from "@material-ui/core/Container";
 import Paper from "@material-ui/core/Paper";
 import {makeStyles} from "@material-ui/core/styles";
@@ -18,24 +18,35 @@ const useStyles = makeStyles((theme) => ({
         width: '100%',
         minHeight: '200px',
         backgroundColor: '#F3D516'
+    },
+    page:{
+        paddingTop:'2rem'
     }
 }));
 
 export const HomePage = ({history}) => {
+    const [levels, setLevels] = useState([])
+
+    useEffect(() => {
+        setLevels([{
+            levelName:"SomeName",
+            description:"description",
+            steps:[{
+            }]
+        },{},{}])
+    },[])
+
     const classes = useStyles()
     return(
         <div>
             <Paper className={classes.paper}>
-                <Container>
+                <Container className={classes.page}>
                     <Grid container spacing={3}>
-                        <Grid item xs={3}>
-                            <FunctionsIcon/>
-                        </Grid>
-                        <Grid item xs={9}>
-                            <Typography>Арифметика</Typography>
-                        </Grid>
+                        {/*fixme: not for mobile*/}
+                        <FunctionsIcon  style={window.innerWidth <= 760? { fontSize: 65 }: { fontSize: 120 }} />
+                        <Typography variant="h1" component="h2" gutterBottom>Арифметика</Typography>
                     </Grid>
-                    <Typography>Выбери свой уровень</Typography>
+                    <Typography  variant="h2" component="h2" gutterBottom>Выбери свой уровень</Typography>
                 </Container>
             </Paper>
             <Container>
