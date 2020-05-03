@@ -13,6 +13,7 @@ import { useAuth } from '../Context/auth'
 import { BASE_URL} from '../constants/RequestConstants'
 import { Base64 } from 'js-base64'
 import {SnackBar} from "../Components/SnackBar";
+import LinearProgress from "@material-ui/core/LinearProgress";
 
 const useStyles = makeStyles((theme) => ({
     paper: {
@@ -42,6 +43,7 @@ export const LoginPage = ({history}) => {
     const [password, setPassword] = useState('')
     const [isSavePassword, setIsSavePassword] = useState(false)
     const [showErr, setShowErr] = useState(false)
+    const [loader, setLoader] = useState(true)
     const { setAuthTokens } = useAuth()
     const classes = useStyles();
 
@@ -57,6 +59,7 @@ export const LoginPage = ({history}) => {
                 history.push({ pathname: '/home' })
             }).catch(() => localStorage.clear())
         }
+        if(token === null) setLoader(false)
     },[])
 
     const authClick = e => {
@@ -78,70 +81,73 @@ export const LoginPage = ({history}) => {
         history.push({ pathname: '/register' })
     }
     return (
-        <Container component="main" maxWidth="xs">
-            <div className={classes.paper}>
-                <img  src={mySvg} alt={"B2School logo"}/>
-                <Typography component="h1" variant="h5">
-                    Войти в B2School
-                </Typography>
-                <form className={classes.form} noValidate>
-                    <TextField
-                        variant="outlined"
-                        margin="normal"
-                        required
-                        fullWidth
-                        id="login"
-                        label="Логин"
-                        name="login"
-                        autoComplete="email"
-                        onChange={e => setLogin(e.target.value)}
-                        autoFocus
+        <>
+            {loader? <LinearProgress />:
+                <Container component="main" maxWidth="xs">
+                    <div className={classes.paper}>
+                        <img src={mySvg} alt={"B2School logo"}/>
+                        <Typography component="h1" variant="h5">
+                            Войти в B2School
+                        </Typography>
+                        <form className={classes.form} noValidate>
+                            <TextField
+                                variant="outlined"
+                                margin="normal"
+                                required
+                                fullWidth
+                                id="login"
+                                label="Логин"
+                                name="login"
+                                autoComplete="email"
+                                onChange={e => setLogin(e.target.value)}
+                                autoFocus
+                            />
+                            <TextField
+                                variant="outlined"
+                                margin="normal"
+                                required
+                                fullWidth
+                                name="password"
+                                label="Пароль"
+                                type="password"
+                                id="password"
+                                onChange={e => setPassword(e.target.value)}
+                                autoComplete="current-password"
+                            />
+                            <FormControlLabel
+                                control={<Checkbox
+                                    value={isSavePassword}
+                                    color="primary"
+                                    onChange={e => setIsSavePassword(e.target.checked)}
+                                />}
+                                label="Запомнить меня"
+                            />
+                            <Button
+                                type="submit"
+                                fullWidth
+                                variant="contained"
+                                color="primary"
+                                className={classes.submit}
+                                onClick={authClick}
+                            >
+                                Войти
+                            </Button>
+                            <Grid container>
+                                <Grid item>
+                                    <Link href="#" variant="body2" onClick={toRegisterPage}>
+                                        {"Еще не аккаунта? Зарегистируйтесь!"}
+                                    </Link>
+                                </Grid>
+                            </Grid>
+                        </form>
+                    </div>
+                    <SnackBar
+                        open={showErr}
+                        funcClose={() => setShowErr(false)}
+                        severity={"error"}
+                        message={"Неверный логин или пароль!"}
                     />
-                    <TextField
-                        variant="outlined"
-                        margin="normal"
-                        required
-                        fullWidth
-                        name="password"
-                        label="Пароль"
-                        type="password"
-                        id="password"
-                        onChange={e => setPassword(e.target.value)}
-                        autoComplete="current-password"
-                    />
-                    <FormControlLabel
-                        control={<Checkbox
-                            value={isSavePassword}
-                            color="primary"
-                            onChange={e => setIsSavePassword(e.target.checked)}
-                        />}
-                        label="Запомнить меня"
-                    />
-                    <Button
-                        type="submit"
-                        fullWidth
-                        variant="contained"
-                        color="primary"
-                        className={classes.submit}
-                        onClick={authClick}
-                    >
-                        Войти
-                    </Button>
-                    <Grid container>
-                        <Grid item>
-                            <Link href="#" variant="body2" onClick={toRegisterPage}>
-                                {"Еще не аккаунта? Зарегистируйтесь!"}
-                            </Link>
-                        </Grid>
-                    </Grid>
-                </form>
-            </div>
-            <SnackBar
-                open={showErr}
-                funcClose={() => setShowErr(false)}
-                severity={"error"}
-                message={"Неверный логин или пароль!"}
-            />
-        </Container>
+                </Container>}
+        </>
     );
 }

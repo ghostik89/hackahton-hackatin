@@ -33,6 +33,7 @@ const useStyles = makeStyles((theme) => ({
 export const HomePage = ({history}) => {
     const [levels, setLevels] = useState([])
     const {authTokens} = useAuth()
+    const classes = useStyles()
 
     useEffect(() => {
         fetch(`${BASE_URL}api/theme/all`,{
@@ -46,7 +47,6 @@ export const HomePage = ({history}) => {
         }).catch(error => console.log(error))
     },[])
 
-    const classes = useStyles()
     return(
         <div>
             <Paper className={classes.paper}>

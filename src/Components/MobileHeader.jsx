@@ -25,7 +25,7 @@ export const Header = () => {
     const [value, setValue] = React.useState(0);
 
     return (
-        <Paper zDepth={1}>
+        <Paper>
             <BottomNavigation
                 value={value}
                 onChange={(event, newValue) => {
