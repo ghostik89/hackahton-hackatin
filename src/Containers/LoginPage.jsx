@@ -10,6 +10,7 @@ import Grid from '@material-ui/core/Grid';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
+import mySvg from '../logo.svg'
 import Container from '@material-ui/core/Container';
 import { useAuth } from '../Context/auth'
 import { BASE_URL} from '../constants/RequestConstants'
@@ -81,11 +82,8 @@ export const LoginPage = ({history}) => {
     }
     return (
         <Container component="main" maxWidth="xs">
-            <CssBaseline />
             <div className={classes.paper}>
-                <Avatar className={classes.avatar}>
-                    <LockOutlinedIcon />
-                </Avatar>
+                    <img  src={mySvg} />
                 <Typography component="h1" variant="h5">
                     Войти в B2School
                 </Typography>
