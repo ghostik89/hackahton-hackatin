@@ -1,11 +1,9 @@
 import React, {useState} from 'react';
-import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
 import Link from '@material-ui/core/Link';
 import Grid from '@material-ui/core/Grid';
-import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
@@ -13,6 +11,9 @@ import MenuItem from "@material-ui/core/MenuItem";
 import InputLabel from "@material-ui/core/InputLabel";
 import Select from "@material-ui/core/Select";
 import FormControl from "@material-ui/core/FormControl";
+import mySvg from "../logo.svg";
+import {BASE_URL} from "../constants/RequestConstants";
+import {SnackBar} from "../Components/SnackBar";
 
 const useStyles = makeStyles((theme) => ({
     paper: {
@@ -39,7 +40,27 @@ const useStyles = makeStyles((theme) => ({
 
 export const RegisterPage = ({history}) => {
     const classes = useStyles();
-    const [role, setRole] = useState(10)
+    const [role, setRole] = useState('student')
+    const [user, setUser] = useState({
+            "firstName": "",
+            "lastName": "",
+            "password": "",
+            "userName": ""
+    })
+    const [showErr, setShowErr] = useState(false)
+
+    const registerClick = e => {
+        e.preventDefault()
+        fetch(`${BASE_URL}api/users/registration/${role}`,{
+                method:'POST',
+                headers: new Headers({
+                    "Content-type": "application/json;charset=utf-8"
+                }),
+                body: JSON.stringify(user)
+        }).then(response => (response.ok ? '': Promise.reject(response))).then(() => {
+            history.push({ pathname: '/' })
+        }).catch(error => console.log(error))
+    }
 
     const toLoginPage = e => {
         e.preventDefault()
@@ -49,9 +70,7 @@ export const RegisterPage = ({history}) => {
         <Container component="main" maxWidth="xs">
             <CssBaseline />
             <div className={classes.paper}>
-                <Avatar className={classes.avatar}>
-                    <LockOutlinedIcon />
-                </Avatar>
+                <img  src={mySvg} alt={"B2School logo"}/>
                 <Typography component="h1" variant="h5">
                     Зарегистрироваться
                 </Typography>
@@ -67,6 +86,7 @@ export const RegisterPage = ({history}) => {
                                 id="firstName"
                                 label="Имя"
                                 autoFocus
+                                onChange={e => setUser({...user, "firstName":e.target.value})}
                             />
                         </Grid>
                         <Grid item xs={12} sm={6}>
@@ -78,24 +98,22 @@ export const RegisterPage = ({history}) => {
                                 label="Фамилия"
                                 name="lastName"
                                 autoComplete="lname"
+                                onChange={e => setUser({...user, "lastName":e.target.value})}
                             />
                         </Grid>
                         <Grid item xs={12}>
                             <FormControl variant="outlined" style={{width: '100%'}}>
-                                <InputLabel id="demo-simple-select-outlined-label">Age</InputLabel>
+                                <InputLabel id="demo-simple-select-outlined-label">Роль</InputLabel>
                                 <Select
                                     labelId="demo-simple-select-outlined-label"
                                     id="demo-simple-select-outlined"
                                     value={role}
                                     onChange={e => setRole(e.target.value)}
-                                    label="Age"
+                                    label="Роль"
                                 >
-                                    <MenuItem value="">
-                                        <em>None</em>
-                                    </MenuItem>
-                                    <MenuItem value={10}>Ten</MenuItem>
-                                    <MenuItem value={20}>Twenty</MenuItem>
-                                    <MenuItem value={30}>Thirty</MenuItem>
+                                    <MenuItem value={'student'}>Ученик</MenuItem>
+                                    <MenuItem value={'teacher'}>Учитель</MenuItem>
+                                    <MenuItem value={'parent'}>Родитель</MenuItem>
                                 </Select>
                             </FormControl>
                         </Grid>
@@ -108,6 +126,7 @@ export const RegisterPage = ({history}) => {
                                 label="Имя пользователя"
                                 name="login"
                                 autoComplete="login"
+                                onChange={e => setUser({...user, "userName":e.target.value})}
                             />
                         </Grid>
                         <Grid item xs={12}>
@@ -120,6 +139,7 @@ export const RegisterPage = ({history}) => {
                                 type="password"
                                 id="password"
                                 autoComplete="current-password"
+                                onChange={e => setUser({...user, "password":e.target.value})}
                             />
                         </Grid>
                     </Grid>
@@ -129,6 +149,7 @@ export const RegisterPage = ({history}) => {
                         variant="contained"
                         color="primary"
                         className={classes.submit}
+                        onClick={registerClick}
                     >
                        Зарегистрироваться
                     </Button>
@@ -141,6 +162,12 @@ export const RegisterPage = ({history}) => {
                     </Grid>
                 </form>
             </div>
+            <SnackBar
+                open={showErr}
+                funcClose={() => setShowErr(false)}
+                severity={"error"}
+                message={"Нверно заполнены поля! Возможно, такой пользователь существует."}
+            />
         </Container>
     );
 }
