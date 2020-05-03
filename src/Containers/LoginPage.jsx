@@ -12,6 +12,9 @@ import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import { useAuth } from '../Context/auth'
+import { BASE_URL} from '../constants/RequestConstants'
+import { Base64 } from 'js-base64'
+import {SnackBar} from "../Components/SnackBar";
 
 const useStyles = makeStyles((theme) => ({
     paper: {
@@ -39,22 +42,38 @@ const useStyles = makeStyles((theme) => ({
 export const LoginPage = ({history}) => {
     const [login, setLogin] = useState('')
     const [password, setPassword] = useState('')
-    const { authTokens, setAuthTokens } = useAuth()
+    const [isSavePassword, setIsSavePassword] = useState(false)
+    const [showErr, setShowErr] = useState(false)
+    const { setAuthTokens } = useAuth()
     const classes = useStyles();
+
+    const authRequest = () => {
+        return fetch(`${BASE_URL}api/users/login`, {
+            headers: new Headers({
+                "Authorization": `Basic ${Base64.encode(`${login}:${password}`)}`
+            })
+        }).then(response => (response.ok ? response.json() : Promise.reject(response)))
+    }
 
     useEffect( () => {
         const token = localStorage.getItem('token')
         if (token !== null){
-            setAuthTokens({ user: 'res', token: 'token' })
-            history.push({ pathname: '/home' })
+            authRequest().then(res => {
+                const token = `${Base64.encode(`${login}:${password}`)}`
+                setAuthTokens({ user: res, token: token })
+                history.push({ pathname: '/home' })
+            }).catch(() => localStorage.clear())
         }
+
     },[])
 
     const authClick = e => {
         e.preventDefault()
-        localStorage.setItem('token', 'token')
-        setAuthTokens({ user: 'res', token: 'token' })
-        history.push({ pathname: '/home' })
+        authRequest().then(res => {
+            const token = `${Base64.encode(`${login}:${password}`)}`
+            setAuthTokens({ user: res, token: token })
+            history.push({ pathname: '/home' })
+        }).catch(() => setShowErr(true))
     }
 
     const toRegisterPage = e =>{
@@ -97,7 +116,11 @@ export const LoginPage = ({history}) => {
                         autoComplete="current-password"
                     />
                     <FormControlLabel
-                        control={<Checkbox value="remember" color="primary" />}
+                        control={<Checkbox
+                            value={isSavePassword}
+                            color="primary"
+                            onChange={e => setIsSavePassword(e.target.checked)}
+                        />}
                         label="Запомнить меня"
                     />
                     <Button
@@ -119,6 +142,12 @@ export const LoginPage = ({history}) => {
                     </Grid>
                 </form>
             </div>
+            <SnackBar
+                open={showErr}
+                funcClose={() => setShowErr(false)}
+                severity={"error"}
+                message={"Неверный логин или пароль!"}
+            />
         </Container>
     );
 }
