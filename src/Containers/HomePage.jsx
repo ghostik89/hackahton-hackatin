@@ -5,7 +5,6 @@ import Paper from "@material-ui/core/Paper";
 import {makeStyles} from "@material-ui/core/styles";
 import FunctionsIcon from '@material-ui/icons/Functions';
 import Grid from "@material-ui/core/Grid";
-import ListSubheader from "@material-ui/core/ListSubheader";
 import List from "@material-ui/core/List";
 import {LevelItem} from "../Components/HomePage/LevelItem";
 import {useAuth} from "../Context/auth";
@@ -65,11 +64,6 @@ export const HomePage = ({history}) => {
                     <List
                         component="nav"
                         aria-labelledby="nested-list-subheader"
-                        subheader={
-                            <ListSubheader component="div" id="nested-list-subheader">
-                                Nested List Items
-                            </ListSubheader>
-                        }
                         className={classes.list}
                     >
                         {levels.map(elem => <LevelItem key={elem["id"]} unit={elem}/>)}
