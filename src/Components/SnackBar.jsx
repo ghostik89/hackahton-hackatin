@@ -1,14 +1,9 @@
 import React from 'react';
 import Snackbar from '@material-ui/core/Snackbar';
 import MuiAlert from '@material-ui/lab/Alert';
-import Slide from "@material-ui/core/Slide";
 
 function Alert(props) {
     return <MuiAlert elevation={6} variant="filled" {...props} />;
-}
-
-function SlideTransition(props) {
-    return <Slide {...props} direction="up" />;
 }
 
 export const SnackBar = props => {
@@ -23,11 +18,10 @@ export const SnackBar = props => {
 
     return (
             <Snackbar
-                anchorOrigin={{ vertical: 'bottom', horizontal: 'left' }}
-                TransitionComponent={SlideTransition}
+                anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
                 open={props.open} autoHideDuration={6000} onClose={handleClose}>
                 <Alert onClose={handleClose} severity={props.severity}>
-                    This is a success message!
+                    {props.message}
                 </Alert>
             </Snackbar>
     );
