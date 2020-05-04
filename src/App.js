@@ -12,6 +12,8 @@ import { deepPurple, pink} from '@material-ui/core/colors'
 import { ruRU } from '@material-ui/core/locale';
 import {RegisterPage} from "./Containers/RegisterPage";
 import {LevelPage} from "./Containers/LevelPage";
+import {TrendingPage} from "./Containers/TrendingPage";
+import {AccountPage} from "./Containers/AccountPage";
 
 
 const theme = createMuiTheme({
@@ -32,6 +34,10 @@ function App() {
     const [authTokens, setAuthTokens] = useState({user:{}, token:""});
     const setTokens = (data) => {
         setAuthTokens(data);
+    }
+
+    const logOut = () => {
+        setAuthTokens({user:{}, token:""});
     }
 
     theme.typography.h1 = {
@@ -63,7 +69,9 @@ function App() {
                     <Switch>
                         <Route exact path={"/"} component={props => <LoginPage  {...props}/>}/>
                         <Route exact path={"/register"} component={props => <RegisterPage  {...props}/>}/>
-                        <PrivateRouter exact path={"/home"} component={HomePage}/>
+                        <PrivateRouter exact path={"/home"} component={HomePage} logOut = {logOut}/>
+                        <PrivateRouter exact path={"/trending"} component={TrendingPage} logOut = {logOut}/>
+                        <PrivateRouter exact path={"/account"} component={AccountPage} logOut = {logOut}/>
                         <PrivateRouter exact path={"/level/:levelId/:name"} component={LevelPage}/>
                         <Route path="*" component={props => <NotFoundPage{...props}/>}/>
                     </Switch>

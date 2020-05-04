@@ -1,10 +1,11 @@
+
+import {Header} from "../Components/MobileHeader";
 import React from "react";
 import {useAuth} from "../Context/auth";
 import Paper from "@material-ui/core/Paper";
 import Container from "@material-ui/core/Container";
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
-import {Header} from "../Components/MobileHeader";
 import makeStyles from "@material-ui/core/styles/makeStyles";
 
 const useStyles = makeStyles((theme) => ({
@@ -27,7 +28,7 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
-export const AccountPage = ({history}) => {
+export const TrendingPage = ({history}) => {
     const {authTokens} = useAuth()
     const classes = useStyles()
 
@@ -41,12 +42,12 @@ export const AccountPage = ({history}) => {
                 </Container>
             </Paper>
             <Container>
-                <Typography  variant="h2" component="h2" gutterBottom>Аккаунт</Typography>
+                <Typography  variant="h2" component="h2" gutterBottom>Статистика</Typography>
                 <Paper>
 
                 </Paper>
             </Container>
-            <Header value={2} history = {history}/>
+            <Header value={1} history = {history}/>
         </div>
     );
 

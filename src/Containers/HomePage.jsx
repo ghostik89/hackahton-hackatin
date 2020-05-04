@@ -59,7 +59,7 @@ export const HomePage = ({history}) => {
                 <Container className={classes.page}>
                     <Grid container spacing={3}>
                         {/*fixme: not for mobile*/}
-                        <Typography variant="h1" component="h2" gutterBottom>B2S:ARITHMETIC</Typography>
+                        <Typography variant="h1" component="h2" gutterBottom>B2S:ARITHMET</Typography>
                     </Grid>
                 </Container>
             </Paper>
@@ -75,7 +75,7 @@ export const HomePage = ({history}) => {
                     </List>
                 </Paper>
             </Container>
-            <Header value={0}/>
+             <Header value={0} history = {history}/>
         </div>
     )
 }
