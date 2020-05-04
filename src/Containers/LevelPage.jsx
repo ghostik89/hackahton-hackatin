@@ -182,33 +182,43 @@ export const LevelPage = ({history}) => {
                                     </div>:<div>
                                         <Paper elevation={3} className={classes.beginPaper}>
                                             {wrongAnswers.length === 0?<>
-                                                <SentimentVerySatisfiedIcon color={"primary"}/>
-                                                <Typography>
+                                                <SentimentVerySatisfiedIcon color={"primary"} style={{ fontSize: 80 }}/>
+                                                <Typography variant={"h5"}>
                                                     Молодец! Все верно
                                                 </Typography></>:<>
-                                                <SentimentVeryDissatisfiedIcon/>
-                                                <Typography variant={"h6"}>
+                                                <SentimentVeryDissatisfiedIcon color={"secondary"} style={{ fontSize: 80 }}/>
+                                                <Typography variant={"h5"}>
                                                     {`Сделано ${wrongAnswers.length} ошибок из ${steps.length}`}
                                                 </Typography>
                                                 {wrongAnswers.map(elem => (
-                                                <Typography variant={"h6"}>
+                                                <Typography variant={"h5"}>
                                                     {elem}
                                                 </Typography>))}</>}
                                         </Paper>
                                         {wrongAnswers.length === 0?
                                                 <Button
                                                     className={classes.beginButton}
-                                                    onClick={() =>{history.push({ pathname: '/home' })}}>
+                                                    onClick={toHomePage}>
                                                     Следующий уровень
-                                                </Button>:<Grid container spacing={3}>
-                                                <Button color={"primary"} onClick={resetLevel}>
-                                                    Еще раз
-                                                </Button>
-                                                <Button
-                                                    color={"primary"}
-                                                    startIcon={<HomeIcon />}
-                                                    onClick={toHomePage}
-                                                />
+                                                </Button>:
+                                            <Grid container spacing={2}>
+                                                <Grid item xs={6}>
+                                                    <Button
+                                                        disabled={loader}
+                                                        onClick={resetLevel}
+                                                        className={classes.beginButton}
+                                                    >
+                                                        Начать
+                                                    </Button>
+                                                </Grid>
+                                                <Grid item xs={6}>
+                                                    <Button
+                                                        className={classes.beginButton}
+                                                        onClick={toHomePage}
+                                                    >
+                                                        <HomeIcon />
+                                                    </Button>
+                                                </Grid>
                                             </Grid>}
                                     </div>}
                             </div>}
