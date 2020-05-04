@@ -32,12 +32,17 @@ export const AccountPage = ({history}) => {
     const {authTokens} = useAuth()
     const classes = useStyles()
 
+    const logOut = () => {
+        localStorage.clear()
+        history.push({ pathname: '/'})
+    }
+
     return(
         <div>
             <HeaderS/>
             <Container>
                 <Typography  variant="h2" component="h2" gutterBottom>Аккаунт</Typography>
-                <ComplexGrid user = {authTokens.user}/>
+                <ComplexGrid user = {authTokens.user} logOut={logOut}/>
                 <Paper>
                 </Paper>
             </Container>

@@ -3,7 +3,8 @@ import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
-import ButtonBase from '@material-ui/core/ButtonBase';
+import Avatar from "@material-ui/core/Avatar";
+import Button from "@material-ui/core/Button";
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -34,9 +35,9 @@ export default function ComplexGrid( props ) {
             <Paper className={classes.paper}>
                 <Grid container spacing={2}>
                     <Grid item>
-                        <ButtonBase className={classes.image}>
+                        <Avatar className={classes.image}>
                             <img className={classes.img} alt="complex" src="https://avatarfiles.alphacoders.com/601/60188.jpg" />
-                        </ButtonBase>
+                        </Avatar>
                     </Grid>
                     <Grid item xs={12} sm container>
                         <Grid item xs container direction="column" spacing={2}>
@@ -52,9 +53,9 @@ export default function ComplexGrid( props ) {
                                 </Typography>
                             </Grid>
                             <Grid item>
-                                <Typography variant="body2" style={{ cursor: 'pointer' }} onClick = {props.logOut}>
+                                <Button color={"primary"} style={{ cursor: 'pointer' }} onClick = {props.logOut}>
                                     Выйти
-                                </Typography>
+                                </Button>
                             </Grid>
                         </Grid>
                         <Grid item>
