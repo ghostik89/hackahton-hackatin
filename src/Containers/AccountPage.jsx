@@ -6,6 +6,7 @@ import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 import {Header} from "../Components/MobileHeader";
 import makeStyles from "@material-ui/core/styles/makeStyles";
+import ComplexGrid from "../Components/ComplexGrid";
 
 const useStyles = makeStyles((theme) => ({
     paper: {
@@ -42,8 +43,8 @@ export const AccountPage = ({history}) => {
             </Paper>
             <Container>
                 <Typography  variant="h2" component="h2" gutterBottom>Аккаунт</Typography>
+                <ComplexGrid user = {authTokens.user}/>
                 <Paper>
-
                 </Paper>
             </Container>
             <Header value={2} history = {history}/>

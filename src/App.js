@@ -69,9 +69,9 @@ function App() {
                     <Switch>
                         <Route exact path={"/"} component={props => <LoginPage  {...props}/>}/>
                         <Route exact path={"/register"} component={props => <RegisterPage  {...props}/>}/>
-                        <PrivateRouter exact path={"/home"} component={HomePage} logOut = {logOut}/>
-                        <PrivateRouter exact path={"/trending"} component={TrendingPage} logOut = {logOut}/>
-                        <PrivateRouter exact path={"/account"} component={AccountPage} logOut = {logOut}/>
+                        <PrivateRouter exact path={"/home"} component={HomePage} />
+                        <PrivateRouter exact path={"/trending"} component={TrendingPage} />
+                        <PrivateRouter exact path={"/account"} component={AccountPage} />
                         <PrivateRouter exact path={"/level/:levelId/:name"} component={LevelPage}/>
                         <Route path="*" component={props => <NotFoundPage{...props}/>}/>
                     </Switch>
