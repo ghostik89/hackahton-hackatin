@@ -55,7 +55,7 @@ export const LevelItem = props => {
                                     color="primary"
                                     aria-label="play arrow"
                                     component="span"
-                                    onClick={() => props.goToLevelPage(elem["id"], elem["name"])}>
+                                    onClick={() => props.goToLevelPage(elem["id"], "Уровень " + elem["levelNumber"]+ ". " +elem["name"])}>
                                     {elem["userLevelDto"] === null?'':((elem["userLevelDto"]["successfullyPassed"] === false) ?
                                         <SentimentVeryDissatisfiedIcon style={{ color: red[500] }}/>
                                         : <SentimentVerySatisfiedIcon style={{ color: green[500] }}/>)}

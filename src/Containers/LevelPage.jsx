@@ -12,13 +12,35 @@ import HomeIcon from '@material-ui/icons/Home';
 import {Answers} from "../Components/LevelPage/Answers";
 import Button from "@material-ui/core/Button";
 import {makeStyles} from "@material-ui/core/styles";
+import SentimentVeryDissatisfiedIcon from '@material-ui/icons/SentimentVeryDissatisfied';
+import SentimentVerySatisfiedIcon from '@material-ui/icons/SentimentVerySatisfied';
 import Grid from "@material-ui/core/Grid";
 
-const useStyles = makeStyles(() => ({
+const useStyles = makeStyles(theme => ({
     beginButton:{
         backgroundColor:'#F3D516',
         color:'#000',
-        width: '100%'
+        width:'100%',
+        '&:hover, &$focusVisible':{
+            backgroundColor:'#d2ba1a',
+        },
+    },
+    beginPaper:{
+        color: theme.palette.text.secondary,
+        padding: theme.spacing(5),
+        marginBottom: theme.spacing(6),
+        marginTop:theme.spacing(3),
+        textAlign: 'center',
+        minHeight: '300px'
+    },
+    exPaper:{
+        color:'#000',
+        backgroundColor:'#F3D516',
+        padding: theme.spacing(5),
+        marginBottom: theme.spacing(6),
+        marginTop:theme.spacing(3),
+        textAlign: 'center',
+        minHeight: '150px'
     }
 }))
 
@@ -91,27 +113,59 @@ export const LevelPage = ({history}) => {
                     <div>
                         {!begin?
                             <div>
-                                <Paper elevation={3}>
-                                    <Typography variant="h3" gutterBottom>Выберите правильный вариант ответа</Typography>
+                                <Paper elevation={3} className={classes.beginPaper}>
+                                    <Typography variant="h4" gutterBottom>Выберите правильный вариант ответа</Typography>
                                 </Paper>
-                                <Button
-                                    disabled={loader}
-                                    onClick={() => {
-                                        setBegin(true)
-                                        setBeginDate(new Date())
-                                    }}
-                                    className={classes.beginButton}
-                                >
-                                    Начать
-                                </Button>
+                                <Grid container spacing={2}>
+                                    <Grid item xs={6}>
+                                        <Button
+                                            disabled={loader}
+                                            onClick={() => {
+                                                setBegin(true)
+                                                setBeginDate(new Date())
+                                            }}
+                                            className={classes.beginButton}
+                                        >
+                                            Начать
+                                        </Button>
+                                    </Grid>
+                                    <Grid item xs={6}>
+                                        <Button
+                                            className={classes.beginButton}
+                                            onClick={() =>{history.push({ pathname: '/home' })}}
+                                        >
+                                            <HomeIcon />
+                                        </Button>
+                                    </Grid>
+                                </Grid>
                             </div> :
                             <div>
                                 {currentStep < steps.length?
                                     <div>
-                                        <Paper elevation={3}>
+                                        <Paper elevation={3} className={classes.exPaper}>
                                             <Typography variant="h1" component="h2"
                                                         gutterBottom>{steps[currentStep]["text"]}</Typography>
                                         </Paper>
+                                        <Grid container>
+                                            <Grid item xs={6}>
+                                                <Typography
+                                                    variant={"h6"}
+                                                    align={'left'}
+                                                    color={"secondary"}
+                                                >
+                                                    {`ошибок ${wrongAnswers.length}`}
+                                                </Typography>
+                                            </Grid>
+                                            <Grid item xs={6}>
+                                                <Typography
+                                                    variant={"h6"}
+                                                    align={'right'}
+                                                    color={"primary"}
+                                                >
+                                                    {`сделано ${currentStep} из ${steps.length}`}
+                                                </Typography>
+                                            </Grid>
+                                        </Grid>
                                         <Answers
                                             answers={steps[currentStep]["answers"]}
                                             toNextLevel={() => setCurrentStep(currentStep + 1)}
@@ -126,14 +180,20 @@ export const LevelPage = ({history}) => {
                                             }}
                                         />
                                     </div>:<div>
-                                        <Paper>
-                                            {wrongAnswers.length === 0?
+                                        <Paper elevation={3} className={classes.beginPaper}>
+                                            {wrongAnswers.length === 0?<>
+                                                <SentimentVerySatisfiedIcon color={"primary"}/>
                                                 <Typography>
                                                     Молодец! Все верно
-                                                </Typography>:wrongAnswers.map(elem =>(
-                                                    <Typography>
-                                                        {elem}
-                                                    </Typography>))}
+                                                </Typography></>:<>
+                                                <SentimentVeryDissatisfiedIcon/>
+                                                <Typography variant={"h6"}>
+                                                    {`Сделано ${wrongAnswers.length} ошибок из ${steps.length}`}
+                                                </Typography>
+                                                {wrongAnswers.map(elem => (
+                                                <Typography variant={"h6"}>
+                                                    {elem}
+                                                </Typography>))}</>}
                                         </Paper>
                                         {wrongAnswers.length === 0?
                                                 <Button

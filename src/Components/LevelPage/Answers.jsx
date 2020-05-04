@@ -7,8 +7,13 @@ import Grid from "@material-ui/core/Grid";
 
 const useStyles = makeStyles(() => ({
     buttonBase:{
-        minWidth: '200px',
-        minHeight: '200px'
+        width:'100%',
+        minHeight:'4rem',
+        textAlign: "center"
+    },
+    paper:{
+        width:'100%',
+        minHeight:'4rem'
     }
 }))
 
@@ -26,14 +31,14 @@ export const Answers = props => {
     return(
         <Grid container spacing={3}>
             {props.answers.map(elem => (
-                <Grid item  key={elem["id"]}>
-                    <Paper>
+                <Grid item xs={6} key={elem["id"]}>
+                    <Paper className={classes.paper} elevation={3}>
                         <ButtonBase
                             focusRipple
                             className={classes.buttonBase}
                             onClick={e => answerChecker(e, elem)}
                         >
-                            <Typography>
+                            <Typography variant={"h6"} color={"primary"}>
                                 {elem["text"]}
                             </Typography>
                         </ButtonBase>
