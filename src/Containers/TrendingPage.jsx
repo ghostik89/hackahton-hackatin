@@ -7,6 +7,7 @@ import Container from "@material-ui/core/Container";
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 import makeStyles from "@material-ui/core/styles/makeStyles";
+import {TableTrending} from "../Components/TrendingPage/TableTrending";
 
 const useStyles = makeStyles((theme) => ({
     paper: {
@@ -44,7 +45,7 @@ export const TrendingPage = ({history}) => {
             <Container>
                 <Typography  variant="h2" component="h2" gutterBottom>Статистика</Typography>
                 <Paper>
-
+                    <TableTrending/>
                 </Paper>
             </Container>
             <Header value={1} history = {history}/>
