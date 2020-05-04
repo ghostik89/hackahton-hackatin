@@ -6,7 +6,7 @@ export const ChartTrendig = props => {
         labels: props.statistic.map(elem => elem["userName"]),
         datasets: [
             {
-                label: props.label,
+                label: 'Количество монет',
                 backgroundColor: 'rgba(88,27,152,0.58)',
                 borderColor: '#581B98',
                 borderWidth: 1,
