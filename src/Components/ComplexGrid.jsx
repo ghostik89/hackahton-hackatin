@@ -9,6 +9,7 @@ import Button from "@material-ui/core/Button";
 const useStyles = makeStyles((theme) => ({
     root: {
         flexGrow: 1,
+        marginBottom: theme.spacing(2)
     },
     paper: {
         padding: theme.spacing(2),
@@ -49,7 +50,7 @@ export default function ComplexGrid( props ) {
                                    Ученик
                                 </Typography>
                                 <Typography variant="body2" color="textSecondary">
-                                    {"Реальное имя: " + props.user["firstName"] + "" + props.user["lastName"]}
+                                    {"Реальное имя: " + props.user["firstName"] + " " + props.user["lastName"]}
                                 </Typography>
                             </Grid>
                             <Grid item>
