@@ -8,8 +8,12 @@ import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 import makeStyles from "@material-ui/core/styles/makeStyles";
 import {TableTrending} from "../Components/TrendingPage/TableTrending";
+import {ChartTrendig} from "../Components/TrendingPage/ChartTrendig";
 
 const useStyles = makeStyles((theme) => ({
+    root:{
+        marginBottom: '5rem',
+    },
     paper: {
         marginBottom: theme.spacing(3),
         display: 'flex',
@@ -26,7 +30,8 @@ const useStyles = makeStyles((theme) => ({
         width: '100%',
         minWidth: 360,
         backgroundColor: theme.palette.background.paper,
-    }
+    },
+
 }));
 
 export const TrendingPage = ({history}) => {
@@ -34,7 +39,7 @@ export const TrendingPage = ({history}) => {
     const classes = useStyles()
 
     return(
-        <div>
+        <div className={classes.root}>
             <Paper className={classes.paper} elevation={3}>
                 <Container className={classes.page}>
                     <Grid container spacing={3}>
@@ -46,6 +51,9 @@ export const TrendingPage = ({history}) => {
                 <Typography  variant="h2" component="h2" gutterBottom>Статистика</Typography>
                 <Paper>
                     <TableTrending/>
+                </Paper>
+                <Paper>
+                    <ChartTrendig/>
                 </Paper>
             </Container>
             <Header value={1} history = {history}/>

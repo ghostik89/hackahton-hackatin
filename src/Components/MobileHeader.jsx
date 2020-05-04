@@ -11,9 +11,8 @@ import makeStyles from "@material-ui/core/styles/makeStyles";
 const useStyles = makeStyles({
     root: {
         width: '100%',
-        position:'fixed',
-        left:0,
-        bottom:0
+        position: 'fixed',
+        bottom: 0,
     },
     header_bottomAction_selected:{
         color: "#F3558E"

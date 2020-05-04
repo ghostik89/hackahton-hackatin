@@ -45,7 +45,7 @@ export const TableTrending = () => {
                         </TableRow>
                     </TableHead>
                     <TableBody>
-                        {[[0, 1, 2],[0, 1, 2],[0, 1, 2]].slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row) => {
+                        {[[0, 1, 2, 3],[0, 1, 2, 3],[0, 1, 2, 3]].slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row) => {
                             return (
                                 <TableRow hover tabIndex={-1} key={row.toString()}>
                                     {row.map((column) => {
@@ -62,7 +62,7 @@ export const TableTrending = () => {
                 </Table>
             </TableContainer>
             <TablePagination
-                rowsPerPageOptions={[10, 25, 100]}
+                rowsPerPageOptions={[5, 10, 15]}
                 component="div"
                 count={[[0, 1, 2],[0, 1, 2],[0, 1, 2]].length}
                 rowsPerPage={rowsPerPage}

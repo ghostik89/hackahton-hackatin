@@ -13,6 +13,9 @@ import {Header} from "../Components/MobileHeader";
 import mySvg from "../logo.svg";
 
 const useStyles = makeStyles((theme) => ({
+    root:{
+        marginBottom: '5rem',
+    },
     paper: {
         marginBottom: theme.spacing(3),
         display: 'flex',
