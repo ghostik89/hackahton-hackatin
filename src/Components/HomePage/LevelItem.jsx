@@ -4,11 +4,16 @@ import ExpandLess from "@material-ui/icons/ExpandLess";
 import ExpandMore from "@material-ui/icons/ExpandMore";
 import Collapse from "@material-ui/core/Collapse";
 import List from "@material-ui/core/List";
-import React from "react";
+import React, {useEffect} from "react";
 import {makeStyles} from "@material-ui/core/styles";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import AutorenewIcon from '@material-ui/icons/Autorenew';
+import SentimentVeryDissatisfiedIcon from '@material-ui/icons/SentimentVeryDissatisfied';
+import SentimentVerySatisfiedIcon from '@material-ui/icons/SentimentVerySatisfied';
+import PlayArrowIcon from '@material-ui/icons/PlayArrow'
 import IconButton from "@material-ui/core/IconButton";
+import green from "@material-ui/core/colors/green";
+import red from "@material-ui/core/colors/red";
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -28,6 +33,11 @@ export const LevelItem = props => {
     const handleClick = () => {
         setOpen(!open);
     };
+
+    useEffect(()=>{
+        console.log(props.unit)
+    },[]);
+
     return(
         <div>
             <ListItem button onClick={handleClick}>
@@ -40,14 +50,18 @@ export const LevelItem = props => {
                         <ListItem key={elem["id"]}  className={classes.nested}>
                             <ListItemText primary={elem["name"]} />
                             <ListItemIcon align={"right"}>
+
                                 <IconButton
                                     color="primary"
-                                    aria-label="upload picture"
+                                    aria-label="play arrow"
                                     component="span"
-                                    onClick={() => props.goToLevelPage(elem["id"], elem["name"])}
-                                >
-                                    <AutorenewIcon/>
+                                    onClick={() => props.goToLevelPage(elem["id"], elem["name"])}>
+                                    {elem["userLevelDto"] === null?'':((elem["userLevelDto"]["successfullyPassed"] === false) ?
+                                        <SentimentVeryDissatisfiedIcon style={{ color: red[500] }}/>
+                                        : <SentimentVerySatisfiedIcon style={{ color: green[500] }}/>)}
+                                    {elem["userLevelDto"] === null ? <PlayArrowIcon/> : <AutorenewIcon />}
                                 </IconButton>
+
                             </ListItemIcon>
                         </ListItem>))}
                 </List>
