@@ -61,19 +61,26 @@ export const TrendingPage = ({history}) => {
     const [theme, setTheme] = React.useState('');
     const [statistic, setStatistic] = useState([])
     const [loader, setLoader] = useState(true)
+    const [haveClass, setHaveClass] = useState(false)
 
     useEffect( ()=>{
-        fetch(`${BASE_URL}api/group/statistic/${authTokens.user["classGroupsDto"][0]["id"]}`,{
-            method:'GET',
-            headers: new Headers({
-                "Authorization": `Basic ${authTokens.token}`,
-                "Content-type": "application/json;charset=utf-8"
-            })
-        }).then(response => (response.ok ? response.json(): Promise.reject(response))).then(res => {
-            setStatistic(res)
-            setTheme(res[0]["themesDto"][0]["name"])
+        if(authTokens.user["classGroupsDto"].length!==0){
+            fetch(`${BASE_URL}api/group/statistic/${authTokens.user["classGroupsDto"][0]["id"]}`,{
+                method:'GET',
+                headers: new Headers({
+                    "Authorization": `Basic ${authTokens.token}`,
+                    "Content-type": "application/json;charset=utf-8"
+                })
+            }).then(response => (response.ok ? response.json(): Promise.reject(response))).then(res => {
+                setStatistic(res)
+                setTheme(res[0]["themesDto"][0]["name"])
+                setLoader(false)
+                setHaveClass(true)
+            }).catch(() => setStatistic([]))
+        }else{
             setLoader(false)
-        }).catch(error => console.log(error))
+            setHaveClass(false)
+        }
     },[])
 
     const handleChange = (event) => {
@@ -90,28 +97,33 @@ export const TrendingPage = ({history}) => {
                         <Typography  variant="h6" component="h2" gutterBottom>Топ по пройденым темам</Typography>
                     </Grid>
                     <Divider/>
-                    {loader? <Skeleton variant="rect" width={`100%`} height={118} animation="wave"/>:<>
+                    {loader? <Skeleton variant="rect" width={`100%`} height={118} animation="wave"/>: <>{!haveClass?
+                            <Typography  variant="h4" color="textSecondary" >Вы не зашли в класс :(</Typography>:<>
                         <FormControl variant="outlined" className={classes.formControl}>
-                            <InputLabel id="demo-simple-select-outlined-label">Темы</InputLabel>
-                            <Select
-                                labelId="demo-simple-select-outlined-label"
-                                id="demo-simple-select-outlined"
-                                value={theme}
-                                onChange={handleChange}
-                                label="Темы"
-                            >
-                                {statistic[0]["themesDto"].map(elem => (
-                                    <MenuItem key={elem.toString()} value={elem["name"]}>{elem["name"]}</MenuItem>
-                                ))}
-                            </Select>
+                        <InputLabel id="demo-simple-select-outlined-label">Темы</InputLabel>
+                        <Select
+                        labelId="demo-simple-select-outlined-label"
+                        id="demo-simple-select-outlined"
+                        value={theme}
+                        onChange={handleChange}
+                        label="Темы"
+                        >
+                        {statistic[0]["themesDto"].map(elem => (
+                            <MenuItem key={elem.toString()} value={elem["name"]}>{elem["name"]}</MenuItem>
+                        ))}
+                        </Select>
                         </FormControl>
                         <TableTrending theme={theme} statistic={statistic}/>
-                    </>}
+                        </>}</>}
                 </Paper>
                 <Paper className={classes.paperData}>
                     <Typography  variant="h6" component="h2" gutterBottom>Топ по количеству монет</Typography>
                     <Divider/>
-                    {loader? <Skeleton variant="rect" width={`100%`} height={118} animation="wave"/>:<ChartTrendig statistic={statistic} label={`стастистика ${authTokens.user["classGroupsDto"][0]["name"]} класса`}/>}
+                    {loader? <Skeleton variant="rect" width={`100%`} height={118} animation="wave"/>:
+                        <>{!haveClass?
+                            <Typography  variant="h4" color="textSecondary" >Вы не зашли в класс :(</Typography>:
+                            <ChartTrendig statistic={statistic} label={`стастистика ${authTokens.user["classGroupsDto"][0]["name"]} класса`}/>}
+                            </>}
                 </Paper>
             </Container>
             <Header value={1} history = {history}/>
