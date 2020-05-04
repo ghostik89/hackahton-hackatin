@@ -10,6 +10,8 @@ import SentimentVerySatisfiedIcon from '@material-ui/icons/SentimentVerySatisfie
 import TablePagination from '@material-ui/core/TablePagination';
 import TableRow from '@material-ui/core/TableRow';
 import {TableHeader} from "./TableHeader";
+import red from '@material-ui/core/colors/red';
+import green from "@material-ui/core/colors/green";
 
 const useStyles = makeStyles({
     root: {
@@ -46,8 +48,8 @@ export const TableTrending = props => {
                                     {elem["themesDto"].filter(elem => elem["name"] === props.theme)[0]["levels"].map((column) => (
                                         <TableCell key={column.toString()} align={"left"} >
                                             {column["userLevelDto"] === null?  '-':<>
-                                                {!column["userLevelDto"]["successfullyPassed"]? <SentimentVeryDissatisfiedIcon color={"secondary"} />:
-                                                    <SentimentVerySatisfiedIcon color={"primary"}/>}
+                                                {!column["userLevelDto"]["successfullyPassed"]? <SentimentVeryDissatisfiedIcon style={{color:red[500]}} />:
+                                                    <SentimentVerySatisfiedIcon style={{color:green[500]}}/>}
                                             </>}
                                         </TableCell>
                                     ))}

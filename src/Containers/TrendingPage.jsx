@@ -15,7 +15,7 @@ import MenuItem from "@material-ui/core/MenuItem";
 import Divider from "@material-ui/core/Divider";
 import {HeaderS} from "../Components/Header";
 import {BASE_URL} from "../constants/RequestConstants";
-import LinearProgress from "@material-ui/core/LinearProgress";
+import Skeleton from "@material-ui/lab/Skeleton";
 
 
 
@@ -90,8 +90,7 @@ export const TrendingPage = ({history}) => {
                         <Typography  variant="h6" component="h2" gutterBottom>Топ по пройденым темам</Typography>
                     </Grid>
                     <Divider/>
-                    {loader? <LinearProgress/>:<>
-                        <TableTrending theme={theme} statistic={statistic}/>
+                    {loader? <Skeleton variant="rect" width={`100%`} height={118} animation="wave"/>:<>
                         <FormControl variant="outlined" className={classes.formControl}>
                             <InputLabel id="demo-simple-select-outlined-label">Темы</InputLabel>
                             <Select
@@ -106,12 +105,13 @@ export const TrendingPage = ({history}) => {
                                 ))}
                             </Select>
                         </FormControl>
+                        <TableTrending theme={theme} statistic={statistic}/>
                     </>}
                 </Paper>
                 <Paper className={classes.paperData}>
                     <Typography  variant="h6" component="h2" gutterBottom>Топ по количеству монет</Typography>
                     <Divider/>
-                    {loader? <LinearProgress/>:<ChartTrendig statistic={statistic} label={`стастистика ${authTokens.user["classGroupsDto"][0]["name"]} класса`}/>}
+                    {loader? <Skeleton variant="rect" width={`100%`} height={118} animation="wave"/>:<ChartTrendig statistic={statistic} label={`стастистика ${authTokens.user["classGroupsDto"][0]["name"]} класса`}/>}
                 </Paper>
             </Container>
             <Header value={1} history = {history}/>

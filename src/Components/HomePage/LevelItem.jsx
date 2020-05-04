@@ -12,6 +12,8 @@ import SentimentVeryDissatisfiedIcon from '@material-ui/icons/SentimentVeryDissa
 import SentimentVerySatisfiedIcon from '@material-ui/icons/SentimentVerySatisfied';
 import PlayArrowIcon from '@material-ui/icons/PlayArrow'
 import IconButton from "@material-ui/core/IconButton";
+import green from "@material-ui/core/colors/green";
+import red from "@material-ui/core/colors/red";
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -51,8 +53,8 @@ export const LevelItem = props => {
                                     component="span"
                                     onClick={() => props.goToLevelPage(elem["id"], "Уровень " + elem["levelNumber"]+ ". " +elem["name"])}>
                                     {elem["userLevelDto"] === null?'':((elem["userLevelDto"]["successfullyPassed"] === false) ?
-                                        <SentimentVeryDissatisfiedIcon color={"secondary"}/>
-                                        : <SentimentVerySatisfiedIcon color={"primary"}/>)}
+                                        <SentimentVeryDissatisfiedIcon style={{color:red[500]}}/>
+                                        : <SentimentVerySatisfiedIcon style={{color:green[500]}}/>)}
                                     {elem["userLevelDto"] === null ? <PlayArrowIcon/> : <AutorenewIcon />}
                                 </IconButton>
 
