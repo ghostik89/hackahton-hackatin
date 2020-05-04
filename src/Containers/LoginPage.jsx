@@ -59,9 +59,12 @@ export const LoginPage = ({history}) => {
             }).then(response => (response.ok ? response.json() : Promise.reject(response))).then(res => {
                 setAuthTokens({ user: res, token: token })
                 history.push({ pathname: '/home' })
-            }).catch(() => localStorage.clear())
+            }).catch(() => {
+                localStorage.clear()
+                setLoader(false)
+            })
         }
-        setLoader(false)
+        if(token === null) setLoader(false)
     },[])
 
     const authClick = e => {
