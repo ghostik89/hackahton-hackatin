@@ -61,7 +61,7 @@ export const LoginPage = ({history}) => {
                 history.push({ pathname: '/home' })
             }).catch(() => localStorage.clear())
         }
-        if(token === null) setLoader(false)
+        setLoader(false)
     },[])
 
     const authClick = e => {
