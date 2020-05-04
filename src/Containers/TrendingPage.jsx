@@ -84,7 +84,7 @@ export const TrendingPage = ({history}) => {
         <div className={classes.root}>
             <HeaderS/>
             <Container className={classes.containers}>
-                <Typography  variant="h2" component="h2" gutterBottom>Статистика</Typography>
+                <Typography  variant="h2" component="h2" gutterBottom>Статистика моего класса</Typography>
                 <Paper className={classes.paperData}>
                     <Grid container>
                         <Typography  variant="h6" component="h2" gutterBottom>Топ по пройденым темам</Typography>

@@ -9,6 +9,7 @@ export const TableHeader = props =>{
         <TableHead>
             <TableRow>
                 <TableCell>Nickname</TableCell>
+                <TableCell>Фамилия и имя</TableCell>
                 {props.dump[0]["levels"].map(elem => (
                     <TableCell>{elem["name"]}</TableCell>
                 ))}

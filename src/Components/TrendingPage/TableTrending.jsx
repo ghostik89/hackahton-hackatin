@@ -45,6 +45,7 @@ export const TableTrending = props => {
                         {props.statistic.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((elem) => (
                                 <TableRow hover tabIndex={-1} key={elem["id"]}>
                                     <TableCell>{elem["userName"]}</TableCell>
+                                    <TableCell>{`${elem["firstName"]} ${elem["lastName"]}`}</TableCell>
                                     {elem["themesDto"].filter(elem => elem["name"] === props.theme)[0]["levels"].map((column) => (
                                         <TableCell key={column.toString()} align={"left"} >
                                             {column["userLevelDto"] === null?  '-':<>

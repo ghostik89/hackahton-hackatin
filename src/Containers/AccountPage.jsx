@@ -2,11 +2,11 @@ import React from "react";
 import {useAuth} from "../Context/auth";
 import Paper from "@material-ui/core/Paper";
 import Container from "@material-ui/core/Container";
-import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 import {Header} from "../Components/MobileHeader";
 import makeStyles from "@material-ui/core/styles/makeStyles";
 import ComplexGrid from "../Components/ComplexGrid";
+import {HeaderS} from "../Components/Header";
 
 const useStyles = makeStyles((theme) => ({
     paper: {
@@ -34,13 +34,7 @@ export const AccountPage = ({history}) => {
 
     return(
         <div>
-            <Paper className={classes.paper} elevation={3}>
-                <Container className={classes.page}>
-                    <Grid container spacing={3}>
-                        <Typography variant="h1" component="h2" gutterBottom>B2S:ARITHMET</Typography>
-                    </Grid>
-                </Container>
-            </Paper>
+            <HeaderS/>
             <Container>
                 <Typography  variant="h2" component="h2" gutterBottom>Аккаунт</Typography>
                 <ComplexGrid user = {authTokens.user}/>
