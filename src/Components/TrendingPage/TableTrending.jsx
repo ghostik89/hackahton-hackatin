@@ -33,7 +33,7 @@ export const TableTrending = () => {
     };
 
     return (
-        <Paper className={classes.root}>
+        <Paper className={classes.root} elevation={0}>
             <TableContainer className={classes.container}>
                 <Table stickyHeader aria-label="sticky table">
                     <TableHead>
@@ -62,7 +62,7 @@ export const TableTrending = () => {
                 </Table>
             </TableContainer>
             <TablePagination
-                rowsPerPageOptions={[5, 10, 15]}
+                rowsPerPageOptions={[15, 20, 25]}
                 component="div"
                 count={[[0, 1, 2],[0, 1, 2],[0, 1, 2]].length}
                 rowsPerPage={rowsPerPage}

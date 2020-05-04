@@ -11,6 +11,7 @@ import {useAuth} from "../Context/auth";
 import {BASE_URL} from "../constants/RequestConstants";
 import {Header} from "../Components/MobileHeader";
 import mySvg from "../logo.svg";
+import {HeaderS} from "../Components/Header";
 
 const useStyles = makeStyles((theme) => ({
     root:{
@@ -58,14 +59,7 @@ export const HomePage = ({history}) => {
 
     return(
         <div>
-            <Paper className={classes.paper} elevation={3}>
-                <Container className={classes.page}>
-                    <Grid container spacing={3}>
-                        {/*fixme: not for mobile*/}
-                        <Typography variant="h1" component="h2" gutterBottom>B2S:ARITHMET</Typography>
-                    </Grid>
-                </Container>
-            </Paper>
+            <HeaderS/>
             <Container>
                 <Typography  variant="h2" component="h2" gutterBottom>Выбери уровень</Typography>
                 <Paper>
