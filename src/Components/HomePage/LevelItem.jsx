@@ -48,7 +48,7 @@ export const LevelItem = props => {
                 <List component="div" disablePadding>
                     {props.unit["levels"].map(elem => (
                         <ListItem key={elem["id"]}  className={classes.nested}>
-                            <ListItemText primary={elem["name"]} />
+                            <ListItemText primary={"Уровень " + elem["levelNumber"]+ ". " +elem["name"]} />
                             <ListItemIcon align={"right"}>
 
                                 <IconButton
