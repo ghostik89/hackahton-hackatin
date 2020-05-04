@@ -10,6 +10,7 @@ import {LevelItem} from "../Components/HomePage/LevelItem";
 import {useAuth} from "../Context/auth";
 import {BASE_URL} from "../constants/RequestConstants";
 import {Header} from "../Components/MobileHeader";
+import mySvg from "../logo.svg";
 
 const useStyles = makeStyles((theme) => ({
     paper: {
@@ -18,7 +19,7 @@ const useStyles = makeStyles((theme) => ({
         flexDirection: 'column',
         alignItems: 'left',
         width: '100%',
-        minHeight: '200px',
+        minHeight: '8em',
         backgroundColor: '#F3D516'
     },
     page:{
@@ -58,13 +59,12 @@ export const HomePage = ({history}) => {
                 <Container className={classes.page}>
                     <Grid container spacing={3}>
                         {/*fixme: not for mobile*/}
-                        <FunctionsIcon  style={window.innerWidth <= 760? { fontSize: 65 }: { fontSize: 120 }} />
-                        <Typography variant="h1" component="h2" gutterBottom>Арифметика</Typography>
+                        <Typography variant="h1" component="h2" gutterBottom>B2S:Арифметика</Typography>
                     </Grid>
-                    <Typography  variant="h2" component="h2" gutterBottom>Выбери уровень</Typography>
                 </Container>
             </Paper>
             <Container>
+                <Typography  variant="h2" component="h2" gutterBottom>Выбери уровень</Typography>
                 <Paper>
                     <List
                         component="nav"

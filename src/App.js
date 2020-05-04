@@ -35,18 +35,18 @@ function App() {
     }
 
     theme.typography.h1 = {
-        fontSize: '6rem',
+        fontSize: '4rem',
         fontWeight: 400,
         '@media (max-width:600px)': {
             fontSize: '3rem',
             fontWeight: 400,
         },
         [theme.breakpoints.up('md')]: {
-            fontSize: '6rem',
+            fontSize: '4rem',
         },
     }
     theme.typography.h2 = {
-        fontSize: '4rem',
+        fontSize: '2rem',
         fontWeight: 400,
         '@media (max-width:600px)': {
             fontSize: '2rem',
