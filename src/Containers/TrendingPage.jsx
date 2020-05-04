@@ -1,4 +1,3 @@
-import FunctionsIcon from '@material-ui/icons/Functions';
 import {Header} from "../Components/MobileHeader";
 import React, {useEffect, useState} from "react";
 import {useAuth} from "../Context/auth";
@@ -14,7 +13,6 @@ import InputLabel from "@material-ui/core/InputLabel";
 import Select from "@material-ui/core/Select";
 import MenuItem from "@material-ui/core/MenuItem";
 import Divider from "@material-ui/core/Divider";
-import AssistantIcon from '@material-ui/icons/Assistant';
 import {HeaderS} from "../Components/Header";
 import {BASE_URL} from "../constants/RequestConstants";
 import LinearProgress from "@material-ui/core/LinearProgress";
@@ -60,12 +58,12 @@ const useStyles = makeStyles((theme) => ({
 export const TrendingPage = ({history}) => {
     const {authTokens} = useAuth()
     const classes = useStyles()
-    const [age, setAge] = React.useState('');
+    const [theme, setTheme] = React.useState('');
     const [statistic, setStatistic] = useState([])
     const [loader, setLoader] = useState(true)
 
     useEffect( ()=>{
-        fetch(`${BASE_URL}api/group/statistic/${authTokens.user["classGroupsDto"]["id"]}`,{
+        fetch(`${BASE_URL}api/group/statistic/${authTokens.user["classGroupsDto"][0]["id"]}`,{
             method:'GET',
             headers: new Headers({
                 "Authorization": `Basic ${authTokens.token}`,
@@ -73,12 +71,13 @@ export const TrendingPage = ({history}) => {
             })
         }).then(response => (response.ok ? response.json(): Promise.reject(response))).then(res => {
             setStatistic(res)
+            setTheme(res[0]["themesDto"][0]["name"])
+            setLoader(false)
         }).catch(error => console.log(error))
-        setLoader(false)
     },[])
 
     const handleChange = (event) => {
-        setAge(event.target.value);
+        setTheme(event.target.value);
     };
 
     return(
@@ -92,13 +91,13 @@ export const TrendingPage = ({history}) => {
                     </Grid>
                     <Divider/>
                     {loader? <LinearProgress/>:<>
-                        <TableTrending/>
+                        <TableTrending theme={theme} statistic={statistic}/>
                         <FormControl variant="outlined" className={classes.formControl}>
                             <InputLabel id="demo-simple-select-outlined-label">Темы</InputLabel>
                             <Select
                                 labelId="demo-simple-select-outlined-label"
                                 id="demo-simple-select-outlined"
-                                value={age}
+                                value={theme}
                                 onChange={handleChange}
                                 label="Темы"
                             >
@@ -112,7 +111,7 @@ export const TrendingPage = ({history}) => {
                 <Paper className={classes.paperData}>
                     <Typography  variant="h6" component="h2" gutterBottom>Топ по количеству монет</Typography>
                     <Divider/>
-                    {loader? <LinearProgress/>:<ChartTrendig/>}
+                    {loader? <LinearProgress/>:<ChartTrendig statistic={statistic} label={`стастистика ${authTokens.user["classGroupsDto"][0]["name"]} класса`}/>}
                 </Paper>
             </Container>
             <Header value={1} history = {history}/>

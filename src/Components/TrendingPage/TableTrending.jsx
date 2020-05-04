@@ -5,9 +5,11 @@ import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
 import TableContainer from '@material-ui/core/TableContainer';
-import TableHead from '@material-ui/core/TableHead';
+import SentimentVeryDissatisfiedIcon from '@material-ui/icons/SentimentVeryDissatisfied';
+import SentimentVerySatisfiedIcon from '@material-ui/icons/SentimentVerySatisfied';
 import TablePagination from '@material-ui/core/TablePagination';
 import TableRow from '@material-ui/core/TableRow';
+import {TableHeader} from "./TableHeader";
 
 const useStyles = makeStyles({
     root: {
@@ -18,10 +20,10 @@ const useStyles = makeStyles({
     },
 });
 
-export const TableTrending = () => {
+export const TableTrending = props => {
     const classes = useStyles();
     const [page, setPage] = React.useState(0);
-    const [rowsPerPage, setRowsPerPage] = React.useState(10);
+    const [rowsPerPage, setRowsPerPage] = React.useState(15);
 
     const handleChangePage = (event, newPage) => {
         setPage(newPage);
@@ -36,35 +38,28 @@ export const TableTrending = () => {
         <Paper className={classes.root} elevation={0}>
             <TableContainer className={classes.container}>
                 <Table stickyHeader aria-label="sticky table">
-                    <TableHead>
-                        <TableRow>
-                            <TableCell>Nickname</TableCell>
-                            {[0, 1, 2].map((elem,index) => (
-                                <TableCell>{elem}</TableCell>
-                            ))}
-                        </TableRow>
-                    </TableHead>
+                    <TableHeader theme={props.theme} dump={props.statistic[0]["themesDto"].filter(elem => elem["name"] === props.theme)}/>
                     <TableBody>
-                        {[[0, 1, 2, 3],[0, 1, 2, 3],[0, 1, 2, 3]].slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row) => {
-                            return (
-                                <TableRow hover tabIndex={-1} key={row.toString()}>
-                                    {row.map((column) => {
-                                        return (
-                                            <TableCell key={row.toString()} align={"left"}>
-                                                {column}
-                                            </TableCell>
-                                        );
-                                    })}
+                        {props.statistic.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((elem) => (
+                                <TableRow hover tabIndex={-1} key={elem["id"]}>
+                                    <TableCell>{elem["userName"]}</TableCell>
+                                    {elem["themesDto"].filter(elem => elem["name"] === props.theme)[0]["levels"].map((column) => (
+                                        <TableCell key={column.toString()} align={"left"} >
+                                            {column["userLevelDto"] === null?  '-':<>
+                                                {column["userLevelDto"]? <SentimentVerySatisfiedIcon color={"primary"}/>:
+                                                    <SentimentVeryDissatisfiedIcon color={"secondary"} />}
+                                            </>}
+                                        </TableCell>
+                                    ))}
                                 </TableRow>
-                            );
-                        })}
+                            ))}
                     </TableBody>
                 </Table>
             </TableContainer>
             <TablePagination
                 rowsPerPageOptions={[15, 20, 25]}
                 component="div"
-                count={[[0, 1, 2],[0, 1, 2],[0, 1, 2]].length}
+                count={props.statistic.length}
                 rowsPerPage={rowsPerPage}
                 page={page}
                 onChangePage={handleChangePage}
