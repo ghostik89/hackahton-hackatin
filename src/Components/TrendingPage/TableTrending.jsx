@@ -46,8 +46,8 @@ export const TableTrending = props => {
                                     {elem["themesDto"].filter(elem => elem["name"] === props.theme)[0]["levels"].map((column) => (
                                         <TableCell key={column.toString()} align={"left"} >
                                             {column["userLevelDto"] === null?  '-':<>
-                                                {column["userLevelDto"]? <SentimentVerySatisfiedIcon color={"primary"}/>:
-                                                    <SentimentVeryDissatisfiedIcon color={"secondary"} />}
+                                                {!column["userLevelDto"]["successfullyPassed"]? <SentimentVeryDissatisfiedIcon color={"secondary"} />:
+                                                    <SentimentVerySatisfiedIcon color={"primary"}/>}
                                             </>}
                                         </TableCell>
                                     ))}
